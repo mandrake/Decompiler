@@ -16,19 +16,19 @@ class DecompileCommand(sublime_plugin.TextCommand):
                 self.branches.append(branch[0])
                 print "New Branch L"
                 self.asm_out.write("New Branch L\n")
-                self.hurr_durr_printor(prog.disassemble(branch[0]), prog)
+                self.asm_print(prog.disassemble(branch[0]), prog)
             if branch[1] not in self.branches:
                 self.branches.append(branch[1])
                 print "New Branch R"
                 self.asm_out.write("New Branch R\n")
-                self.hurr_durr_printor(prog.disassemble(branch[1]), prog)
+                self.asm_print(prog.disassemble(branch[1]), prog)
 
     def run(self, edit):
         self.branches = []
         self.asm_out = open(os.path.dirname(self.view.file_name())+'\\asm.out', 'w')
         prog = pydasm.Pymsasid(hook=pydasm.PEFileHook, source=self.view.file_name())
         inst = prog.disassemble(prog.pc)
-        self.asm_print(prog, inst)
+        self.asm_print(inst, prog)
         close(self.asm_out)
         # app = QtCore.CoreApplication([])
         # launch_process()
